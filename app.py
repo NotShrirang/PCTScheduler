@@ -3,7 +3,9 @@ from streamlit_option_menu import option_menu
 import pandas as pd
 import numpy as np
 import datetime
-from utils import schedule_page, generate_blank_schedule
+import schedule_page
+import generate_blank_schedule
+import generate_fen_schedule
 
 st.set_page_config(
     page_title="Scheduler",
@@ -15,8 +17,8 @@ st.markdown("<center><h1 Style='overflow: visible; padding-bottom: 50px; padding
 
 selected = option_menu(
         menu_title=None,
-        options=["Scheduler", "Generate PDF"],
-        icons=['calendar2-event-fill', 'printer'],
+        options=["Scheduler", "Generate Blank Schedule", "Generate FEN Schedule"],
+        icons=['calendar2-event-fill', 'printer', 'chess'],
         default_index=0,
         orientation = "horizontal",
         styles={
@@ -28,8 +30,10 @@ selected = option_menu(
 )
 if selected == "Scheduler":
     schedule_page.render_schedule_page()
-elif selected == "Generate PDF":
+elif selected == "Generate Blank Schedule":
     generate_blank_schedule.render_generate_schedule()
+elif selected == "Generate FEN Schedule":
+    generate_fen_schedule.render_fen_schedule()
         
 hide_menu_style = """
         <style>

@@ -1,22 +1,14 @@
 import streamlit as st
-from .scheduler import Schedule, schedule
+from utils.scheduler import Schedule, schedule
 import pandas as pd
-from io import BytesIO
-from pyxlsb import open_workbook as open_xlsb
+from utils.file_downloader import to_excel
 
-def to_excel(df: pd.DataFrame):
-    output = BytesIO()
-    writer = pd.ExcelWriter(output, engine='openpyxl')
-    df.to_excel(writer, index=False, sheet_name='Sheet1')
-    writer.close()
-    processed_data = output.getvalue()
-    return processed_data
-
+@st.cache_data(experimental_allow_widgets=True)
 def render_schedule_page():
-    st.header("Schedule Page")
+    st.header("Scheduler Page")
     month = st.selectbox("Select Month", ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"])
     year = st.selectbox("Select Year", [2021, 2022, 2023, 2024, 2025, 2026, 2027])
-    uploaded_file = st.file_uploader("Upload a Excel / CSV file", type=["xlsx", "csv"])
+    uploaded_file = st.file_uploader("Upload Coaches' schedule file here...", type=["xlsx", "csv"])
     if uploaded_file is not None:
         if uploaded_file.name[-4:] == "xlsx":
             df = pd.read_excel(uploaded_file)
@@ -28,5 +20,5 @@ def render_schedule_page():
             schedule_obj = schedule(df, year, month)
             st.success("Schedule Generated")
             st.table(schedule_obj.updated_schedule2[str(schedule_group)])
-            df_xlsx = to_excel(schedule_obj.updated_schedule2[str(schedule_group)])
+            df_xlsx = to_excel(schedule_obj.updated_schedule2[str(schedule_group)], "Final Schedule")
             st.download_button("⬇️ Download Schedule", data=df_xlsx, file_name="{}{} - {}.xlsx".format(month, year, schedule_group), mime="application/vnd.ms-excel")
