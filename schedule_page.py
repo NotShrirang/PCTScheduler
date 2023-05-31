@@ -19,6 +19,6 @@ def render_schedule_page():
         if schedule_button:
             schedule_obj = schedule(df, year, month)
             st.success("Schedule Generated")
-            st.table(schedule_obj.updated_schedule2[str(schedule_group)])
-            df_xlsx = to_excel(schedule_obj.updated_schedule2[str(schedule_group)], "Final Schedule")
+            st.dataframe(schedule_obj.updated_schedule2[str(schedule_group)], use_container_width=True)
+            df_xlsx = to_excel([schedule_obj.updated_schedule2[str(schedule_group)]], ["Final Schedule"])
             st.download_button("⬇️ Download Schedule", data=df_xlsx, file_name="{}{} - {}.xlsx".format(month, year, schedule_group), mime="application/vnd.ms-excel")

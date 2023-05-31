@@ -7,7 +7,7 @@ from utils.file_downloader import to_excel
 @st.cache_data(experimental_allow_widgets=True)
 def render_fen_schedule():
     st.header("Generate FEN Schedule Page")
-    month = st.selectbox("Select Month", ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"])
+    MONTH = st.selectbox("Select Month", ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"])
     year = st.selectbox("Select Year", [2021, 2022, 2023, 2024, 2025, 2026, 2027])
 
     generate_button = st.button("Generate Schedule")
@@ -20,7 +20,7 @@ def render_fen_schedule():
 
         TRAINING_GAMES = {"GROUP 3 DATE" : "", "DAY": "", "TIME": "", "TITLE" : "", "FEN": ""}
 
-        month = MONTHS_COUNTER[month]
+        month = MONTHS_COUNTER[MONTH]
         month_days = MONTHS[month]
 
         fen_schedule23 = pd.DataFrame()
@@ -73,5 +73,8 @@ def render_fen_schedule():
         st.dataframe(fen_schedule1, use_container_width=True)
         st.subheader("FEN Schedule for Group 2 and 3")
         st.dataframe(fen_schedule23, use_container_width=True)
+
+        df_xlsx = to_excel([fen_schedule1, fen_schedule23], ["Group 1", "Group 2 and 3"])
+        st.download_button("⬇️ Download Schedule", data=df_xlsx, file_name="{}{} - FENs.xlsx".format(MONTH, year), mime="application/vnd.ms-excel")
 
                 

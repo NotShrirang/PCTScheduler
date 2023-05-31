@@ -187,5 +187,5 @@ def render_generate_schedule():
             st.subheader("Seminar Schedule")
             st.dataframe(seminar_schedule, use_container_width=True)
 
-            df_xlsx = to_excel(final_schedule_df, "Final Schedule")
+            df_xlsx = to_excel([final_schedule_df], ["Final Schedule"])
             st.download_button("⬇️ Download Schedule", data=df_xlsx, file_name="{}{} - Coaches Schedule.xlsx".format(MONTH, year), mime="application/vnd.ms-excel")
