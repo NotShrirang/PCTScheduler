@@ -112,6 +112,10 @@ def schedule(raw_schedule, YEAR, MONTH_NAME):
         blitz = True
         review_test = False
         for date_day_number in range(1, days):
+            if week_count % 2 == 0:
+                blitz = True
+            else:
+                blitz = False
             entry = {}
             curr_date = datetime.datetime(curr_year, curr_month, date_day_number, 00, 00, 00)
             day = INT_TO_DAYS[curr_date.weekday()]
@@ -138,11 +142,10 @@ def schedule(raw_schedule, YEAR, MONTH_NAME):
             if (day == 'Wednesday'):
                 if group in ['Group 1', 'Group 2', 'Group 3']:
                     if blitz:
+                        print(blitz)
                         entry = BLITZ_TOURNAMENTS
-                        blitz = False
                     else:
                         entry = RAPID_TOURNAMENTS
-                        blitz = True
                     entry['GROUP'] = group
                     entry['DATE'] = datetime.datetime(YEAR, MONTHS_COUNTER[MONTH_NAME], date_day_number)
                     entry['TIME'] = datetime.time(5, 30)
@@ -160,10 +163,8 @@ def schedule(raw_schedule, YEAR, MONTH_NAME):
             if (day == 'Thursday' and group in ['Group 1', 'Group 2', 'Group 3']):
                 if blitz:
                     entry = BLITZ_TOURNAMENTS
-                    blitz = False
                 else:
                     entry = RAPID_TOURNAMENTS
-                    blitz = True
                 entry['GROUP'] = group
                 entry['DATE'] = datetime.datetime(YEAR, MONTHS_COUNTER[MONTH_NAME], date_day_number)
                 entry['TIME'] = datetime.time(20, 00)
