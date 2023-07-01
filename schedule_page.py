@@ -17,8 +17,11 @@ def render_schedule_page():
         schedule_group = st.radio("Select Schedule", ["Group 1", "Group 2", "Group 3", "Elite"])
         schedule_button = st.button("Schedule")
         if schedule_button:
-            schedule_obj = schedule(df, year, month)
+            schedule_obj, portal_schedules = schedule(df, year, month)
             st.success("Schedule Generated")
             st.dataframe(schedule_obj.updated_schedule2[str(schedule_group)], use_container_width=True)
+            st.dataframe(portal_schedules[str(schedule_group)], use_container_width=True)
             df_xlsx = to_excel([schedule_obj.updated_schedule2[str(schedule_group)]], ["Final Schedule"])
+            portal_df_xlsx = to_excel([portal_schedules[str(schedule_group)]], ["Group 1"])
+            st.download_button("⬇️ Download Schedule for Portal", data=portal_df_xlsx, file_name="{}{} - {} - Portal Schedule.xlsx".format(month, year, schedule_group), mime="application/vnd.ms-excel")
             st.download_button("⬇️ Download Schedule", data=df_xlsx, file_name="{}{} - {}.xlsx".format(month, year, schedule_group), mime="application/vnd.ms-excel")

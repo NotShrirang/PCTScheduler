@@ -142,7 +142,6 @@ def schedule(raw_schedule, YEAR, MONTH_NAME):
             if (day == 'Wednesday'):
                 if group in ['Group 1', 'Group 2', 'Group 3']:
                     if blitz:
-                        print(blitz)
                         entry = BLITZ_TOURNAMENTS
                     else:
                         entry = RAPID_TOURNAMENTS
@@ -152,7 +151,7 @@ def schedule(raw_schedule, YEAR, MONTH_NAME):
                     entry['DAY'] = day
                     temp_df = pd.DataFrame(entry, index = [0])
                     upload_schedule = pd.concat([upload_schedule, temp_df], ignore_index=True)
-                if group in ['Group 1', 'Group 2', 'Elite']:
+                if group in ['Group 1', 'Group 2']:
                     entry = TRAINING_GAMES
                     entry['GROUP'] = group
                     entry['DATE'] = datetime.datetime(YEAR, MONTHS_COUNTER[MONTH_NAME], date_day_number)
@@ -265,4 +264,4 @@ def schedule(raw_schedule, YEAR, MONTH_NAME):
     sch.portal_schedules = portal_schedules
     sch.updated_schedule2 = updated_schedule2
 
-    return sch
+    return sch, portal_schedules
