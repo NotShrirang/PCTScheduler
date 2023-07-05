@@ -65,9 +65,9 @@ def render_fen_schedule():
                 fen_schedule1 = pd.concat([fen_schedule1, pd.DataFrame([entry])], ignore_index=True, axis=0)
                 continue
 
-        fen_schedule23.columns = ["GROUP 2 DATE", "GROUP 3 DATE", "GROUP 3 DAY", "TIME", "TITLE", "FEN"]
         fen_schedule1 = fen_schedule1[["GROUP 1 DATE", "DAY", "TIME", "TITLE", "FEN"]]
-        fen_schedule23 = fen_schedule23[["GROUP 2 DATE", "GROUP 3 DATE", "GROUP 3 DAY", "TIME", "TITLE", "FEN"]]
+        fen_schedule23 = fen_schedule23[["GROUP 2 DATE", "GROUP 3 DATE", "DAY", "TIME", "TITLE", "FEN"]]
+        fen_schedule23.columns = ["GROUP 2 DATE", "GROUP 3 DATE", "GROUP 3 DAY", "TIME", "TITLE", "FEN"]
         st.success("Blank Schedule generated successfully!")
         st.subheader("FEN Schedule for Group 1")
         st.dataframe(fen_schedule1, use_container_width=True)
