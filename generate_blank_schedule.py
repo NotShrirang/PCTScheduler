@@ -54,6 +54,7 @@ def render_generate_schedule():
                 current_day = current_date.strftime("%A")
                 current_date = current_date.strftime("%Y-%m-%d")
                 if current_day == "Monday":
+                    entry = CLASS.copy()
                     entry["DATE"] = current_date
                     entry["DAY"] = current_day
                     entry["TIME"] = datetime.time(20, 0).strftime("%H:%M")
