@@ -59,7 +59,7 @@ def render_generate_schedule():
                     entry["TIME"] = datetime.time(20, 0).strftime("%H:%M")
                     entry["GROUP"] = "Elite"
                     elite_schedule = pd.concat([elite_schedule, pd.DataFrame([entry])], ignore_index=True, axis=0)
-					continue
+                    continue
                 elif current_day == "Tuesday":
                     entry = CLASS.copy()
                     entry["DATE"] = current_date
