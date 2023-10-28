@@ -105,7 +105,7 @@ def schedule(raw_schedule, YEAR, MONTH_NAME):
         curr_month = month_span.month
         curr_year = month_span.year
         week_count = 1
-        temp_df = group_schedule[group_schedule['Coach Name'] != 'Seminar']
+        temp_df = group_schedule[group_schedule['Coach Name'] != 'SEMINAR']
         temp_df = temp_df.rename(columns={'Date': "DATE", 'Day': "DAY", 'IST Time': "TIME", 'Coach Name': 'COACH', 'Topic': 'TITLE', 'Group': 'GROUP'})
         temp_df.insert(len(temp_df.columns), column='CLASS TYPE', value=["Lessons"]*len(temp_df.index))
         upload_schedule = pd.concat([upload_schedule, temp_df], ignore_index=True)
@@ -187,24 +187,24 @@ def schedule(raw_schedule, YEAR, MONTH_NAME):
                     entry['DAY'] = day
                     temp_df = pd.DataFrame(entry, index = [0])
                     upload_schedule = pd.concat([upload_schedule, temp_df], ignore_index=True)
-                    # entry = SEMINAR
-                    # entry['GROUP'] = 'Group 1;Group 2'
-                    # entry['DATE'] = datetime.datetime(YEAR, MONTHS_COUNTER[MONTH_NAME], date_day_number)
-                    # entry['TIME'] = datetime.time(20, 00)
-                    # entry['TITLE'] = "Seminar"
-                    # entry['DAY'] = day
-                    # temp_df = pd.DataFrame(entry, index = [0])
-                    # upload_schedule = pd.concat([upload_schedule, temp_df], ignore_index=True)
+                    entry = SEMINAR
+                    entry['GROUP'] = 'Group 1;Group 2'
+                    entry['DATE'] = datetime.datetime(YEAR, MONTHS_COUNTER[MONTH_NAME], date_day_number)
+                    entry['TIME'] = datetime.time(20, 00)
+                    entry['TITLE'] = "Seminar"
+                    entry['DAY'] = day
+                    temp_df = pd.DataFrame(entry, index = [0])
+                    upload_schedule = pd.concat([upload_schedule, temp_df], ignore_index=True)
             if (day == 'Sunday'):
-                # if group in ['Group 2', 'Group 3']:
-                #     entry = SEMINAR
-                #     entry['GROUP'] = 'Group 2;Group 3'
-                #     entry['DATE'] = datetime.datetime(YEAR, MONTHS_COUNTER[MONTH_NAME], date_day_number)
-                #     entry['TIME'] = datetime.time(20, 00)
-                #     entry['TITLE'] = "Seminar - Group 2 & 3"
-                #     entry['DAY'] = day
-                #     temp_df = pd.DataFrame(entry, index = [0])
-                #     upload_schedule = pd.concat([upload_schedule, temp_df], ignore_index=True)
+                if group in ['Group 2', 'Group 3']:
+                    entry = SEMINAR
+                    entry['GROUP'] = 'Group 2;Group 3'
+                    entry['DATE'] = datetime.datetime(YEAR, MONTHS_COUNTER[MONTH_NAME], date_day_number)
+                    entry['TIME'] = datetime.time(20, 00)
+                    entry['TITLE'] = "Seminar - Group 2 & 3"
+                    entry['DAY'] = day
+                    temp_df = pd.DataFrame(entry, index = [0])
+                    upload_schedule = pd.concat([upload_schedule, temp_df], ignore_index=True)
                 week_count += 1
         upload_schedule = upload_schedule[upload_schedule['COACH'] != 'Seminar']
         upload_schedule.sort_values(by=['DATE', 'TIME'], ignore_index=True, inplace=True)
