@@ -53,7 +53,15 @@ def render_generate_schedule():
                 current_date = datetime.date(year, month, day)
                 current_day = current_date.strftime("%A")
                 current_date = current_date.strftime("%Y-%m-%d")
-                if current_day == "Tuesday":
+                if current_day == "Monday":
+                    entry = CLASS.copy()
+                    entry["DATE"] = current_date
+                    entry["DAY"] = current_day
+                    entry["TIME"] = datetime.time(20, 0).strftime("%H:%M")
+                    entry["GROUP"] = "Elite"
+                    elite_schedule = pd.concat([elite_schedule, pd.DataFrame([entry])], ignore_index=True, axis=0)
+                    continue
+                elif current_day == "Tuesday":
                     entry = CLASS.copy()
                     entry["DATE"] = current_date
                     entry["DAY"] = current_day
@@ -142,11 +150,6 @@ def render_generate_schedule():
                     seminar_schedule = pd.concat([seminar_schedule, pd.DataFrame([entry])], ignore_index=True, axis=0)
                     ALL_SEMINARS["Group 2 + 3"][current_date] = entry
                     entry = CLASS.copy()
-                    entry["DATE"] = current_date
-                    entry["DAY"] = current_day
-                    entry["TIME"] = datetime.time(20, 0).strftime("%H:%M")
-                    entry["GROUP"] = "Elite"
-                    elite_schedule = pd.concat([elite_schedule, pd.DataFrame([entry])], ignore_index=True, axis=0)
                     if week_counter in [2, 4]:
                         entry = EXERCISE_REVIEWS.copy()
                         entry["DATE"] = current_date
