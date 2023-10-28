@@ -147,7 +147,7 @@ def schedule(raw_schedule, YEAR, MONTH_NAME):
                         entry = RAPID_TOURNAMENTS
                     entry['GROUP'] = group
                     entry['DATE'] = datetime.datetime(YEAR, MONTHS_COUNTER[MONTH_NAME], date_day_number)
-                    entry['TIME'] = datetime.time(5, 30)
+                    entry['TIME'] = datetime.time(6, 30)
                     entry['DAY'] = day
                     temp_df = pd.DataFrame(entry, index = [0])
                     upload_schedule = pd.concat([upload_schedule, temp_df], ignore_index=True)
@@ -174,7 +174,7 @@ def schedule(raw_schedule, YEAR, MONTH_NAME):
                 entry = TRAINING_GAMES
                 entry['GROUP'] = group
                 entry['DATE'] = datetime.datetime(YEAR, MONTHS_COUNTER[MONTH_NAME], date_day_number)
-                entry['TIME'] = datetime.time(5, 30)
+                entry['TIME'] = datetime.time(6, 30)
                 entry['DAY'] = day
                 temp_df = pd.DataFrame(entry, index = [0])
                 upload_schedule = pd.concat([upload_schedule, temp_df], ignore_index=True)
@@ -183,7 +183,7 @@ def schedule(raw_schedule, YEAR, MONTH_NAME):
                     entry = TRAINING_GAMES
                     entry['GROUP'] = group
                     entry['DATE'] = datetime.datetime(YEAR, MONTHS_COUNTER[MONTH_NAME], date_day_number)
-                    entry['TIME'] = datetime.time(5, 30)
+                    entry['TIME'] = datetime.time(6, 30)
                     entry['DAY'] = day
                     temp_df = pd.DataFrame(entry, index = [0])
                     upload_schedule = pd.concat([upload_schedule, temp_df], ignore_index=True)
