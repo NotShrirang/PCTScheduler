@@ -112,7 +112,7 @@ def schedule(raw_schedule, YEAR, MONTH_NAME):
                          "DATE": "", "TIME": "", "TITLE": "Blitz Tournament - 7 rounds - 3 + 2"}
     SEMINAR = {"CLASS TYPE": "Seminars", "GROUP": "",
                "COACH": "", "DATE": "", "TIME": "", "TITLE": ""}
-    EXERCISE_REVIEWS = {"GROUP": "", "DATE": "", "TIME": datetime.time(
+    EXERCISE_REVIEWS = {"CLASS TYPE": "Seminars", "GROUP": "", "DATE": "", "TIME": datetime.time(
         19, 0), "DAY": "", "COACH": "", "TITLE": "Exercise Review"}
 
     upload_schedule = pd.DataFrame()
