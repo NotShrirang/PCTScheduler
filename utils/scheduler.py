@@ -279,6 +279,7 @@ def schedule(raw_schedule, YEAR, MONTH_NAME):
                         exercise_review['DATE'] = datetime.datetime(
                             YEAR, MONTHS_COUNTER[MONTH_NAME], date_day_number)
                         exercise_review['DAY'] = day
+                        exercise_review['GROUP'] = 'Group 2;Group 3'
                         temp_df = pd.concat([temp_df, pd.DataFrame(
                             exercise_review, index=[0])], ignore_index=True)
                     upload_schedule = pd.concat(
