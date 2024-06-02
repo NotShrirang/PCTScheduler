@@ -24,8 +24,10 @@ def render_schedule_page():
         if schedule_button:
             schedule_obj, portal_schedules = schedule(df, year, month)
             st.success("Schedule Generated")
+            st.info("Schedule for PDFs")
             st.dataframe(schedule_obj.new_format[str(
                 schedule_group)], use_container_width=True)
+            st.info("Schedule for Portal")
             st.dataframe(portal_schedules[str(
                 schedule_group)], use_container_width=True)
             df_xlsx = to_excel([schedule_obj.new_format[str(schedule_group)]], [
