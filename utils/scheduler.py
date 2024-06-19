@@ -192,7 +192,7 @@ def schedule(raw_schedule, YEAR, MONTH_NAME):
                     entry['GROUP'] = group
                     entry['DATE'] = datetime.datetime(
                         YEAR, MONTHS_COUNTER[MONTH_NAME], date_day_number)
-                    entry['TIME'] = datetime.time(6, 30)
+                    entry['TIME'] = datetime.time(5, 30)
                     entry['DAY'] = day
                     temp_df = pd.DataFrame(entry, index=[0])
                     upload_schedule = pd.concat(
