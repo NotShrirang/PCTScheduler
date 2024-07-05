@@ -30,8 +30,6 @@ def render_generate_schedule():
                  "DAY": "", "COACH": "", "TITLE": ""}
         EXERCISE_REVIEWS = {"GROUP": "", "DATE": "", "TIME": datetime.time(
             19, 0).strftime("%H:%M"), "DAY": "", "COACH": "", "TITLE": "Exercise Reviews"}
-        TRAINING_GAMES = {"GROUP": "", "DATE": "",
-                          "TIME": "", "DAY": "", "COACH": "", "TITLE": ""}
 
         ALL_SEMINARS = {"Group 1 + 2": {}, "Group 2 + 3": {}}
 
@@ -43,6 +41,7 @@ def render_generate_schedule():
         grp2_schedule = pd.DataFrame()
         grp3_schedule = pd.DataFrame()
         elite_schedule = pd.DataFrame()
+        super_gm_schedule = pd.DataFrame()
         seminar_schedule = pd.DataFrame()
         exercise_review = pd.DataFrame()
 
@@ -73,6 +72,10 @@ def render_generate_schedule():
                 entry["GROUP"] = "Elite"
                 elite_schedule = pd.concat(
                     [elite_schedule, pd.DataFrame([entry])], ignore_index=True, axis=0)
+                entry["TIME"] = datetime.time(20, 30).strftime("%H:%M")
+                entry["GROUP"] = "Group 3"
+                grp3_schedule = pd.concat(
+                    [grp3_schedule, pd.DataFrame([entry])], ignore_index=True, axis=0)
                 continue
             elif current_day == "Tuesday":
                 entry = CLASS.copy()
@@ -194,6 +197,7 @@ def render_generate_schedule():
         final_schedules["Group 2"] = grp2_schedule
         final_schedules["Group 3"] = grp3_schedule
         final_schedules["Elite"] = elite_schedule
+        # final_schedules["Super GM"] = super_gm_schedule
 
         final_schedules["Group 1"].sort_values(
             by=["DATE", "TIME"], inplace=True)
@@ -201,7 +205,10 @@ def render_generate_schedule():
             by=["DATE", "TIME"], inplace=True)
         final_schedules["Group 3"].sort_values(
             by=["DATE", "TIME"], inplace=True)
-        final_schedules["Elite"].sort_values(by=["DATE", "TIME"], inplace=True)
+        final_schedules["Elite"].sort_values(
+            by=["DATE", "TIME"], inplace=True)
+        # final_schedules["Super GM"].sort_values(
+        #     by=["DATE", "TIME"], inplace=True)
 
         final_schedule_df = pd.DataFrame()
         for _, schedule in final_schedules.items():
@@ -209,7 +216,8 @@ def render_generate_schedule():
                 [final_schedule_df, schedule], ignore_index=True, axis=1)
 
         final_schedule_df.columns = ["Group 1", "Group 1 Date", "Group 1 Time", "Group 1 Day", "Group 1 Coach", "Group 1 Topic", "Group 2", "Group 2 Date", "Group 2 Time", "Group 2 Day", "Group 2 Coach",
-                                     "Group 2 Topic", "Group 3", "Group 3 Date", "Group 3 Time", "Group 3 Day", "Group 3 Coach", "Group 3 Topic", "Elite", "Elite Date", "Elite Time", "Elite Day", "Elite Coach", "Elite Topic"]
+                                     "Group 2 Topic", "Group 3", "Group 3 Date", "Group 3 Time", "Group 3 Day", "Group 3 Coach", "Group 3 Topic", "Elite", "Elite Date", "Elite Time", "Elite Day", "Elite Coach", "Elite Topic", ]
+                                    #  "Super GM", "Super GM Date", "Super GM Time", "Super GM Day", "Super GM Coach", "Super GM Topic"]
         seminar_schedule23 = seminar_schedule[seminar_schedule["GROUP"]
                                               == "Group 2 + 3"]
         seminar_schedule12 = seminar_schedule[seminar_schedule["GROUP"]

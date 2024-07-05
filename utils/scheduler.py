@@ -323,7 +323,7 @@ def schedule(raw_schedule, YEAR, MONTH_NAME):
         temp = temp[['CLASS TYPE', 'GROUP', 'COACH', 'DATE', 'TIME', 'TITLE']]
         temp['DATE'] = pd.to_datetime(temp['DATE']).dt.strftime('%Y-%m-%d')
         temp['TIME'] = pd.to_datetime(
-            temp['TIME'], format='%H:%M:%S').dt.strftime('%I:%M')
+            temp['TIME'], format='%H:%M:%S').dt.strftime('%H:%M')
         portal_schedules[group] = temp
 
     # with pd.ExcelWriter(f'{MONTH_NAME} {YEAR} - Upload on Portal.xlsx', datetime_format='YYYY-MM-DD') as writer:
@@ -352,10 +352,11 @@ def schedule(raw_schedule, YEAR, MONTH_NAME):
     for group in GROUPS:
         curr_sch = updated_schedule2[group].copy()
         curr_sch['DATE AND TIME'] = curr_sch[['DATE', 'DAY', 'TIME', 'EST Date',
-                                              'EST Day',	'EST Time']].apply(lambda x: convert(x), axis=1)
+                                              'EST Day', 'EST Time']].apply(lambda x: convert(x), axis=1)
         curr_sch.drop(columns=['DATE', 'DAY', 'TIME',
                       'EST Date', 'EST Day', 'EST Time'], inplace=True)
-        curr_sch = curr_sch[['DATE AND TIME', 'COACH', 'TITLE']]
+        curr_sch: pd.DataFrame = curr_sch[['DATE AND TIME', 'COACH', 'TITLE']]
+        st.dataframe(curr_sch[curr_sch.duplicated(subset=['TITLE'], keep='first')], use_container_width=True)
         updated_schedule3[group] = curr_sch.copy()
 
     # with pd.ExcelWriter(f'{MONTH_NAME} {YEAR} - IST EST Combined.xlsx', datetime_format='YYYY-MM-DD') as writer:
