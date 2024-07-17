@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import datetime
+import requests
 from utils.file_downloader import to_excel
 
 
@@ -26,6 +27,11 @@ def render_fen_schedule():
 
         TRAINING_GAMES = {"GROUP 3 DATE": "", "DAY": "",
                           "TIME": "", "TITLE": "", "FEN": ""}
+        
+        # RANDOM_GENERATOR_URL = "https://assets.codepen.io/1143063/ply8_fairchess.json"
+        # response = requests.get(RANDOM_GENERATOR_URL)
+        
+        random_generator = pd.read_json("random_generator.json")
 
         month = MONTHS_COUNTER[MONTH]
         month_days = MONTHS[month]
@@ -49,6 +55,8 @@ def render_fen_schedule():
                 entry["GROUP 2 DATE"] = next_date
                 entry["DAY"] = current_day
                 entry["TIME"] = datetime.time(20, 0).strftime("%H:%M")
+                sample_fen = random_generator.sample(1)['fen']
+                entry["FEN"] = sample_fen.values[0]
                 fen_schedule23 = pd.concat(
                     [fen_schedule23, pd.DataFrame([entry])], ignore_index=True, axis=0)
 
@@ -57,6 +65,8 @@ def render_fen_schedule():
                 entry["GROUP 1 DATE"] = next_date
                 entry["DAY"] = next_day
                 entry["TIME"] = datetime.time(20, 0).strftime("%H:%M")
+                sample_fen = random_generator.sample(1)['fen']
+                entry["FEN"] = sample_fen.values[0]
                 fen_schedule1 = pd.concat(
                     [fen_schedule1, pd.DataFrame([entry])], ignore_index=True, axis=0)
                 continue
@@ -66,6 +76,8 @@ def render_fen_schedule():
                 entry["GROUP 2 DATE"] = next_date
                 entry["DAY"] = current_day
                 entry["TIME"] = datetime.time(5, 30).strftime("%H:%M")
+                sample_fen = random_generator.sample(1)['fen']
+                entry["FEN"] = sample_fen.values[0]
                 fen_schedule23 = pd.concat(
                     [fen_schedule23, pd.DataFrame([entry])], ignore_index=True, axis=0)
 
@@ -75,6 +87,8 @@ def render_fen_schedule():
                     datetime.timedelta(days=1)
                 entry["DAY"] = next_day
                 entry["TIME"] = datetime.time(5, 30).strftime("%H:%M")
+                sample_fen = random_generator.sample(1)['fen']
+                entry["FEN"] = sample_fen.values[0]
                 fen_schedule1 = pd.concat(
                     [fen_schedule1, pd.DataFrame([entry])], ignore_index=True, axis=0)
                 continue
@@ -90,6 +104,9 @@ def render_fen_schedule():
         st.dataframe(fen_schedule1, use_container_width=True)
         st.subheader("FEN Schedule for Group 2 and 3")
         st.dataframe(fen_schedule23, use_container_width=True)
+
+        st.write("Any Entries duplicated: ", fen_schedule1['FEN'].duplicated().any())
+        st.write("Any Entries duplicated: ", fen_schedule23['FEN'].duplicated().any())
 
         df_xlsx = to_excel([fen_schedule1, fen_schedule23],
                            ["Group 1", "Group 2 and 3"])
