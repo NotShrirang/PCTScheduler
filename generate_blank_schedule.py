@@ -72,10 +72,10 @@ def render_generate_schedule():
                 entry["GROUP"] = "Elite"
                 elite_schedule = pd.concat(
                     [elite_schedule, pd.DataFrame([entry])], ignore_index=True, axis=0)
-                entry["TIME"] = datetime.time(20, 30).strftime("%H:%M")
-                entry["GROUP"] = "Group 3"
-                grp3_schedule = pd.concat(
-                    [grp3_schedule, pd.DataFrame([entry])], ignore_index=True, axis=0)
+                # entry["TIME"] = datetime.time(20, 30).strftime("%H:%M")
+                # entry["GROUP"] = "Group 3"
+                # grp3_schedule = pd.concat(
+                #     [grp3_schedule, pd.DataFrame([entry])], ignore_index=True, axis=0)
                 continue
             elif current_day == "Tuesday":
                 entry = CLASS.copy()
